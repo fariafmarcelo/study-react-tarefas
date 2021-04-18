@@ -7,7 +7,7 @@ export default class Menu extends Component {
             <nav className="navbar navbar-inverse bg-inverse">
                 <div className="container">
                     <div className="navbar-header">
-                        <a className="nav-bar-brand" href="/">
+                        <a className="nav-bar-brand" href="/tarefas">
                             <i className="fa fa-calender-check-o"></i> TodoApp
                         </a>
                     </div>

@@ -9,7 +9,5 @@ Bootstrap
 
 MongoDB is required (Download on official site) \
 create-react-app is required `npm create-react-app`
-### `npm run dev` for backend
-### `npm run start` for frontend
-
-### Rodando na porta 3003
+### `npm run dev` for backend port 3003
+### `npm start` for frontend port 3000
