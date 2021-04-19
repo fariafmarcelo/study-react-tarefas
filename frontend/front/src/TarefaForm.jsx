@@ -22,7 +22,7 @@ export default class TarefaForm extends Component {
     }
 
     buscaTarefas(){
-        axios.get(`http://localhost:3003/api/tarefas`).then(
+        axios.get(`http://localhost:3003/api/tarefas?sort=createdAt`).then(
             resp => this.setState({lista: resp.data})
         )
     }
@@ -36,7 +36,11 @@ export default class TarefaForm extends Component {
                     <td>{cadaTarefa.quem}</td>
                     <td>{cadaTarefa.onde}</td>
                     <td>{cadaTarefa.prioridade}</td>
-                    <td><button type="button" onClick={ e => this.remover()} className="btn btn-danger">Remover</button></td>
+                    <td>
+                        <button type="button" onClick={ e => this.remover(cadaTarefa)} className="btn btn-danger">Remover</button>
+                        <button style={cadaTarefa.realizada ? {display: "none"} : null} type="button" onClick={ e => this.marcaComoFeita(cadaTarefa)} className="btn btn-success">Feita</button>
+                        <button style={cadaTarefa.realizada ? null : {display: "none"}} type="button" onClick={ e => this.marcaComoDesfeita(cadaTarefa)} className="btn btn-warning">Desfeita</button>
+                    </td>
                 </tr>
             ))
         )
@@ -78,12 +82,25 @@ export default class TarefaForm extends Component {
             `http://localhost:3003/api/tarefas`, newTask
         ).then(resposta => console.log(`Funcionou ${resposta.data}`))
 
+        this.buscaTarefas();
     }
 
-    remover(){
+    remover(e){
         axios.delete(
-            `http://localhost:3003/api/tarefas`
-        )
+            `http://localhost:3003/api/tarefas/${e._id}`
+        ).then(resp => this.buscaTarefas())
+    }
+
+    marcaComoFeita(e){
+        axios.put(
+            `http://localhost:3003/api/tarefa/${e._id}`, {... e, realizada: true}
+        ).then(resp => this.buscaTarefas())
+    }
+
+    marcaComoDesfeita(e){
+        axios.put(
+            `http://localhost:3003/api/tarefa/${e._id}`, {... e, realizada: false}
+        ).then(resp => this.buscaTarefas())
     }
 
     render(){
